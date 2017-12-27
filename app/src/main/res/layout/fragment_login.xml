@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMRed"
+    >
+
+    <RelativeLayout
+        android:id="@+id/logo_wrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m30dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_shape"
+        >
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/form_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/m30dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/username_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m30dp"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/username_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_account_circle"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/username_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/username_icon"
+                android:hint="@string/username_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/separator_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m2dp"
+            android:background="@color/colorMWhite"
+            android:layout_marginTop="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/password_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/password_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_lock"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/password_icon"
+                android:inputType="textPassword"
+                android:hint="@string/password_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_footer"
+        android:layout_below="@id/form_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/m20dp"
+            android:paddingBottom="@dimen/m20dp"
+            android:background="@color/colorMOrange"
+            android:textColor="@color/colorMWhite"
+            android:text="@string/login_button"
+            />
+
+        <TableLayout
+            android:id="@+id/separator_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/m20dp"
+            >
+
+            <TableRow
+                android:id="@+id/first_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                >
+
+                <View
+                    android:id="@+id/separator_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorMWhite"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/or_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    android:layout_marginRight="@dimen/m5dp"
+                    android:text="@string/or_text"
+                    android:textColor="@color/colorMWhite"
+                    android:textAlignment="center"
+                    />
+
+                <View
+                    android:id="@+id/separator_right"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/m2dp"
+                    android:background="@color/colorMWhite"
+                    android:layout_gravity="center_vertical"
+                    />
+
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/create_acc_button"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/m20dp"
+            android:paddingBottom="@dimen/m20dp"
+            android:background="@color/colorMGreen"
+            android:textColor="@color/colorMWhite"
+            android:text="@string/create_account_button"
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

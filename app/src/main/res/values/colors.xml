@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorMOrange">#FFF65C5C</color>
+    <color name="colorMGreen">#FF476544</color>
+    <color name="colorMRed">#FFC82A2A</color>
+    <color name="colorMBlack">#FF000000</color>
+    <color name="colorMWhite">#FFFFFFFF</color>
+    <color name="colorMNoColor">#00000000</color>
+    <color name="colorMWhiteDarker">#F2E7E7</color>
+    <color name="colorMWhiteBone">#e3dac9</color>
+</resources>

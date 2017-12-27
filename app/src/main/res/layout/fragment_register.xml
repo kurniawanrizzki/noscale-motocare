@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMRed"
+    >
+
+    <LinearLayout
+        android:id="@+id/form_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/m30dp"
+        android:layout_marginBottom="@dimen/m30dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/username_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/username_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_account_circle"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/username_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/username_icon"
+                android:hint="@string/username_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/first_separator_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m2dp"
+            android:background="@color/colorMWhite"
+            android:layout_marginTop="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/email_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/email_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_email"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/email_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/email_icon"
+                android:hint="@string/email_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/second_separator_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m2dp"
+            android:background="@color/colorMWhite"
+            android:layout_marginTop="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/password_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/password_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_lock_outline"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/password_icon"
+                android:inputType="textPassword"
+                android:hint="@string/password_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/third_separator_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m2dp"
+            android:background="@color/colorMWhite"
+            android:layout_marginTop="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/cpassword_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/cpassword_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_lock"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/cpassword_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:layout_toRightOf="@+id/cpassword_icon"
+                android:hint="@string/cpassword_text"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_footer"
+        android:layout_below="@id/form_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/submit_reg_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/m20dp"
+            android:paddingBottom="@dimen/m20dp"
+            android:background="@color/colorMOrange"
+            android:textColor="@color/colorMWhite"
+            android:text="@string/register_button"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
