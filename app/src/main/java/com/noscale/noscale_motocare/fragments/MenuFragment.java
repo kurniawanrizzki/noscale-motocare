@@ -22,7 +22,7 @@ public class MenuFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.menu_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_menu, container, false);
         controller = new MenuController(this);
         return view;
     }

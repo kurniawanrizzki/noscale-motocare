@@ -11,4 +11,5 @@
     <color name="colorMNoColor">#00000000</color>
     <color name="colorMWhiteDarker">#F2E7E7</color>
     <color name="colorMWhiteBone">#e3dac9</color>
+    <color name="colorTrBlack">#66000000</color>
 </resources>

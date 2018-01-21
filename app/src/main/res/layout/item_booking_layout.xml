@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/garage_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m15dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/booking_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMWhite"
+            >
+
+            <View
+                android:id="@+id/separator_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/m2dp"
+                android:background="@color/colorMGreen"
+                android:layout_alignParentTop="true"
+                />
+
+            <RelativeLayout
+                android:id="@+id/booking_status_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/separator_top"
+                >
+
+                <LinearLayout
+                    android:id="@+id/status_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/m10dp"
+                    android:layout_alignParentRight="true"
+                    >
+
+                    <TextView
+                        android:id="@+id/status_booking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/m5dp"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/booking_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:textStyle="bold"
+                android:layout_below="@+id/booking_status_layout"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginBottom="@dimen/m5dp"
+                android:layout_marginTop="@dimen/m5dp"
+                android:textColor="@color/colorMBlack"
+                />
+
+            <TextView
+                android:id="@+id/booking_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="6pt"
+                android:textColor="@color/colorMGreen"
+                android:layout_below="@id/booking_code"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginBottom="@dimen/m2dp"
+                />
+
+            <TextView
+                android:id="@+id/booking_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="6pt"
+                android:textColor="@color/colorMGreen"
+                android:layout_below="@id/booking_service"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginBottom="@dimen/m5dp"
+                />
+
+            <View
+                android:id="@+id/separator_bookings"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/m2dp"
+                android:background="@color/colorMGreen"
+                android:layout_marginTop="@dimen/m5dp"
+                android:layout_below="@id/booking_day"
+                />
+
+            <RelativeLayout
+                android:id="@+id/booking_price_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/separator_bookings"
+                android:background="@color/colorMOrange"
+                >
+
+                <TextView
+                    android:id="@+id/booking_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10pt"
+                    android:textStyle="bold"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/m10dp"
+                    android:layout_marginBottom="@dimen/m5dp"
+                    android:layout_marginTop="@dimen/m5dp"
+                    android:textColor="@color/colorMWhite"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

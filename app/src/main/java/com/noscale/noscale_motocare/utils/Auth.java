@@ -1,9 +1,17 @@
 package com.noscale.noscale_motocare.utils;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 
+import com.android.volley.Request;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.noscale.noscale_motocare.models.User;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * Created by kurniawanrrizki on 26/12/17.
@@ -13,7 +21,6 @@ public class Auth {
 
     private static Context ctx;
     private static Auth instance;
-    private User user;
 
     public static Auth getInstance (Context context) {
         if (null == instance) {
@@ -24,62 +31,49 @@ public class Auth {
         return instance;
     }
 
-    public boolean authenticate (String username, String password) {
+    public void authenticate (String username, String password) {
 
-        User user;
+        HashMap<String, String> loginParams = new HashMap<>();
+        loginParams.put("email",username);
+        loginParams.put("password",password);
+        RequestBuilder.getInstance(ctx).build(Global.LOGIN_TAG, Global.LOGIN_API, Request.Method.POST, loginParams);
 
-        if (Global.IS_DEMO_VERSION) {
-            user = DummySingleton.getInstance().getDummyUser();
-        }
-
-        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-            stored(user);
-            return true;
-        }
-
-        return false;
     }
 
-    public boolean register (User user) {
+    public void register (String username, String password, String email, String phone) {
 
-        User existedUser;
-
-        if (Global.IS_DEMO_VERSION) {
-            existedUser = DummySingleton.getInstance().getDummyUser();
-
-            if (!existedUser.getUsername().equals(user.getUsername())) {
-                stored(user);
-                return true;
-            }
-
-            return false;
-
-        }
-
-        if (null == existedUser) {
-            stored(existedUser);
-            return true;
-        }
-
-        return false;
+        HashMap<String, String> registerParams = new HashMap<>();
+        registerParams.put("name", username);
+        registerParams.put("password", password);
+        registerParams.put("email", email);
+        registerParams.put("no_telepon", phone);
+        RequestBuilder.getInstance(ctx).build(Global.REGISTER_TAG, Global.REGISTER_API, Request.Method.POST, registerParams);
     }
 
-    private void stored (User user) {
+    public User getUserContentFromResponse (String content, String token) {
+        JsonParser parser = new JsonParser();
+        JsonObject userJson = parser.parse(content).getAsJsonObject();
+
+        return new User(
+                userJson.get("id").getAsInt(),
+                userJson.get("name").getAsString(),
+                null,
+                userJson.get("no_telepon").getAsString(),
+                userJson.get("email").getAsString(),
+                token
+        );
+    }
+
+    public String setUser (User user) {
         Gson gson = new Gson();
-        String userJson = gson.toJson(user);
-        MPreference.getInstance(ctx).putStringToMPreference(userJson, Global.EXTRA_USER);
+        return gson.toJson(user);
     }
 
     public User getUser () {
 
-        if (null == user) {
-            Gson gson = new Gson();
-            String userJson = MPreference.getInstance(ctx).getStringFromMPreference(Global.EXTRA_USER, Global.DEFAULT_STRING_VALUE);
-            user = gson.fromJson(userJson, User.class);
-        }
-
-        return user;
-
+        Gson gson = new Gson();
+        String userJson = MPreference.getInstance(ctx).getStringFromMPreference(Global.EXISTED_USER_PREF, Global.DEFAULT_STRING_VALUE);
+        return gson.fromJson(userJson, User.class);
     }
 
 }

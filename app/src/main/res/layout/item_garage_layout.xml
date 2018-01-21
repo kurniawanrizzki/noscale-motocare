@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/garage_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/m15dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/garage_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMWhite"
+            >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/garage_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/m15dp"
+                />
+
+            <TextView
+                android:id="@+id/garage_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/garage_photo"
+                android:textSize="8pt"
+                android:textColor="@color/colorMBlack"
+                android:layout_marginTop="@dimen/m15dp"
+                />
+
+            <TextView
+                android:id="@+id/garage_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/garage_photo"
+                android:layout_below="@id/garage_name"
+                android:textColor="@color/colorMGreen"
+                android:layout_marginBottom="@dimen/m15dp"
+                />
+
+            <TextView
+                android:id="@+id/garage_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/garage_photo"
+                android:layout_below="@id/garage_address"
+                android:textColor="@color/colorMGreen"
+                android:layout_marginBottom="@dimen/m10dp"
+                android:layout_marginTop="@dimen/m5dp"
+                android:textSize="5pt"
+                />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

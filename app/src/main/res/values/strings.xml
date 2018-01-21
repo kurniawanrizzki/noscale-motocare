@@ -1,15 +1,55 @@
 <resources>
 
     <string name="app_name">Motocare</string>
-    <string name="username_text">Username</string>
+    <string name="username_text">Name</string>
     <string name="password_text">Password</string>
     <string name="email_text">Email</string>
+    <string name="phone_text">Phone</string>
     <string name="cpassword_text">Confirm Password</string>
     <string name="notification_text">Notification</string>
     <string name="or_text">OR</string>
+    <string name="wait_text">Please wait ....</string>
+    <string name="field_required">%1$s field required.</string>
+    <string name="field_format">%1$s field format doesn\'t match.</string>
+    <string name="field_length">%1$s field require min. %2$d character and %3$d character.</string>
+    <string name="password_matched">Confirm password doesn\'t match.</string>
 
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
     <string name="create_account_button">Create An Account</string>
+
+    <string name="user_created_response">User created</string>
+    <string name="user_signed_response">User signed</string>
+    <string name="bengkel_list_response">List of all bengkels</string>
+    <string name="bengkel_info_response">Bengkel information</string>
+    <string name="user_udpated_response">User updated</string>
+    <string name="user_pass_updated_response">User\'s password updated</string>
+    <string name="book_response">Booking information</string>
+    <string name="booked_text">Success booked the service</string>
+    <string name="user_token_expired">token_expired</string>
+    <string name="user_welcome">You are login as %1$s.</string>
+    <string name="failed_connect_to">Connection to %1$s unreachable, Please to try again.</string>
+    <string name="logout_message">Are you sure want to log out?</string>
+    <string name="user_information_changed">User information has been changed.</string>
+    <string name="relogin_text">, Please to re-login.</string>
+    <string name="password_not_match_text">Email or Password are incorrect</string>
+    <string name="change_form_question">Are you sure to change your current information?</string>
+    <string name="change_password_question">Are you sure to change your current password?</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+    <string name="garage_name_text">Garage</string>
+    <string name="garage_address_text">Address</string>
+    <string name="garage_description_text">Description</string>
+    <string name="garage_show_map">Show in Map</string>
+    <string name="edit_text">Edit</string>
+    <string name="header_booking_title">Booking</string>
+    <string name="services_title">Services</string>
+    <string name="date_title">Day</string>
+    <string name="date_text">DD/MM/YYYY</string>
+    <string name="time_radio">Session Time</string>
+    <string name="date_first_session">08:00 - 12:00</string>
+    <string name="date_second_session">13:00 - 16:00</string>
 
 </resources>

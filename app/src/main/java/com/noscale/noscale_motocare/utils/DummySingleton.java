@@ -28,7 +28,7 @@ public class DummySingleton {
     }
 
     public User getDummyUser () {
-        return new User(1,"test","12345", "test@noscale.com");
+        return new User(1,"test","12345", "test@noscale.com", "6289669294490", Global.DUMMY_TOKEN);
     }
 
     public List<Garage> getDummyGarage () {

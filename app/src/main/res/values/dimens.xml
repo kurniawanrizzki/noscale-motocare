@@ -9,4 +9,5 @@
     <dimen name="m20dp">20dp</dimen>
     <dimen name="m30dp">30dp</dimen>
     <dimen name="m175dp">175dp</dimen>
+    <dimen name="m280dp">280dp</dimen>
 </resources>

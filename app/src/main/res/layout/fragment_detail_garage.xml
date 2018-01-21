@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMWhiteBone"
+    >
+
+    <ScrollView
+        android:id="@+id/detail_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:id="@+id/detail_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:id="@+id/detail_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorMWhite"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginRight="@dimen/m10dp"
+                android:layout_marginTop="@dimen/m10dp"
+                >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMBlack"
+                    android:textStyle="bold"
+                    android:textSize="8pt"
+                    android:layout_marginTop="@dimen/m2dp"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:textColor="@color/colorMGreen"
+                    android:layout_marginTop="@dimen/m2dp"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    android:layout_marginBottom="@dimen/m5dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/booking_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/colorMOrange"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    >
+                    <TextView
+                        android:id="@+id/book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="8pt"
+                        android:layout_margin="14dp"
+                        android:text="BOOKING"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorMWhite"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/separator_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:background="@color/colorMGreen"
+                    android:layout_below="@id/address"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTrBlack"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginRight="@dimen/m10dp"
+                >
+
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    />
+
+                <View
+                    android:id="@+id/separator_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:background="@color/colorMGreen"
+                    android:layout_below="@id/image"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/description_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginRight="@dimen/m10dp"
+                android:layout_marginTop="@dimen/m10dp"
+                android:background="@color/colorMWhite"
+                >
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorMBlack"
+                    android:text="Description"
+                    android:layout_marginTop="@dimen/m2dp"
+                    android:layout_marginBottom="@dimen/m2dp"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/content_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorMGreen"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    android:layout_marginBottom="@dimen/m2dp"
+                    android:layout_below="@+id/description"
+                    />
+
+                <View
+                    android:id="@+id/separator_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:background="@color/colorMGreen"
+                    android:layout_below="@id/content_description"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/map_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/m280dp"
+                android:layout_margin="@dimen/m10dp"
+                android:background="@color/colorMWhite"
+                >
+
+                <TextView
+                    android:id="@+id/garage_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="8pt"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorMBlack"
+                    android:text="Location"
+                    android:layout_marginTop="@dimen/m2dp"
+                    android:layout_marginBottom="@dimen/m2dp"
+                    android:layout_marginLeft="@dimen/m5dp"
+                    />
+
+                <View
+                    android:id="@+id/separator_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:layout_below="@id/garage_location"
+                    android:background="@color/colorMGreen"
+                    />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/separator_location"
+                    ></com.google.android.gms.maps.MapView>
+
+                <View
+                    android:id="@+id/separator_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/m2dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorMGreen"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

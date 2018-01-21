@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMOrange"
+    >
+
+    <RelativeLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorMRed"
+        >
+
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/header_booking_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/m10dp"
+            />
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/save_btn"
+            />
+
+        <ImageView
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_circle"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/m10dp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/services_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/header_layout"
+        android:layout_margin="@dimen/m10dp"
+        >
+
+        <TextView
+            android:id="@+id/services_form_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMWhiteDarker"
+            android:text="@string/services_title"
+            android:layout_marginLeft="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <Spinner
+            android:id="@+id/services_form_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m5dp"
+            android:layout_marginRight="@dimen/m5dp"
+            android:background="@drawable/bg_spinner"
+            ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/date_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/services_form"
+        android:layout_marginLeft="@dimen/m10dp"
+        android:layout_marginRight="@dimen/m10dp"
+        android:layout_marginBottom="@dimen/m10dp"
+        >
+
+        <TextView
+            android:id="@+id/date_form_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMWhiteDarker"
+            android:layout_marginLeft="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            android:text="@string/date_title"
+            />
+
+        <Spinner
+            android:id="@+id/date_form_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m5dp"
+            android:layout_marginRight="@dimen/m5dp"
+            android:background="@drawable/bg_spinner"
+            ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/radio_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m10dp"
+        android:layout_marginRight="@dimen/m10dp"
+        android:layout_marginBottom="@dimen/m10dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/date_form"
+        >
+
+        <TextView
+            android:id="@+id/radio_form_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorMWhiteDarker"
+            android:layout_marginLeft="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            android:text="@string/time_radio"
+            />
+
+        <RadioGroup
+            android:id="@+id/radio_time_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/date_first_session" />
+
+            <RadioButton
+                android:id="@+id/rb_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_second_session" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</RelativeLayout>

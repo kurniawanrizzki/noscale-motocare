@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.noscale.noscale_motocare.R;
+import com.noscale.noscale_motocare.activities.MainActivity;
 
 /**
  * Created by kurniawanrrizki on 26/12/17.
@@ -21,6 +22,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.schedule_fragment, container, false);
+        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getController().getBridge().initScheduleLayout(this);
         return view;
     }
 

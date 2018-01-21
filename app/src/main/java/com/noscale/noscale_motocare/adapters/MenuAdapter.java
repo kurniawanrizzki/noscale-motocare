@@ -13,9 +13,9 @@ import com.noscale.noscale_motocare.controllers.MenuController;
 public class MenuAdapter extends FragmentStatePagerAdapter {
 
     private MenuController controller;
-    private static final int GARAGE_PAGE = 0;
-    private static final int SCHEDULE_PAGE = 1;
-    private static final int HISTORY_PAGE = 2;
+    public static final int GARAGE_PAGE = 0;
+    public static final int SCHEDULE_PAGE = 1;
+    public static final int HISTORY_PAGE = 2;
 
     public MenuAdapter(FragmentManager fm, MenuController controller) {
         super(fm);

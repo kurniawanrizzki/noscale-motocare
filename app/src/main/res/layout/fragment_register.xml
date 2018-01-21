@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/username_icon"
                 android:hint="@string/username_text"
+                android:maxLength="30"
                 android:padding="@dimen/m10dp"
                 android:background="@color/colorMNoColor"
                 android:textColorHint="@color/colorMWhiteDarker"
@@ -76,6 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/email_icon"
                 android:hint="@string/email_text"
+                android:maxLength="100"
+                android:inputType="textEmailAddress"
                 android:padding="@dimen/m10dp"
                 android:background="@color/colorMNoColor"
                 android:textColorHint="@color/colorMWhiteDarker"
@@ -86,6 +89,47 @@
 
         <View
             android:id="@+id/second_separator_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/m2dp"
+            android:background="@color/colorMWhite"
+            android:layout_marginTop="@dimen/m5dp"
+            android:layout_marginBottom="@dimen/m5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/phone_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/m30dp"
+            android:layout_marginRight="@dimen/m30dp"
+            >
+
+            <ImageView
+                android:id="@+id/phone_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_local_phone"
+                android:padding="@dimen/m5dp"
+                />
+
+            <EditText
+                android:id="@+id/phone_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/phone_icon"
+                android:hint="@string/phone_text"
+                android:inputType="phone"
+                android:maxLength="15"
+                android:padding="@dimen/m10dp"
+                android:background="@color/colorMNoColor"
+                android:textColorHint="@color/colorMWhiteDarker"
+                android:textColor="@color/colorMWhite"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/fourth_separator_form"
             android:layout_width="match_parent"
             android:layout_height="@dimen/m2dp"
             android:background="@color/colorMWhite"
@@ -116,6 +160,7 @@
                 android:layout_toRightOf="@+id/password_icon"
                 android:inputType="textPassword"
                 android:hint="@string/password_text"
+                android:maxLength="30"
                 android:padding="@dimen/m10dp"
                 android:background="@color/colorMNoColor"
                 android:textColorHint="@color/colorMWhiteDarker"
@@ -156,6 +201,7 @@
                 android:inputType="textPassword"
                 android:layout_toRightOf="@+id/cpassword_icon"
                 android:hint="@string/cpassword_text"
+                android:maxLength="30"
                 android:padding="@dimen/m10dp"
                 android:background="@color/colorMNoColor"
                 android:textColorHint="@color/colorMWhiteDarker"

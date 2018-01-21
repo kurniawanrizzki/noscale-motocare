@@ -7,6 +7,7 @@ import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 import com.noscale.noscale_motocare.models.Schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class NotificationManager {
     }
 
     private void initData() {
+
+        schedules = new ArrayList<>();
 
         if (Global.IS_DEMO_VERSION) {
             schedules = DummySingleton.getInstance().getSchedule();
