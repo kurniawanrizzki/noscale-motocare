@@ -163,12 +163,8 @@ public class FragmentController {
 
                 hideLeftDrawer();
 
-                if (null == activity.getNotificationManager().getNotificationPopup()) {
-                    activity.getNotificationManager().initPopup();
-                }
-
-                if (activity.getNotificationManager().getNotificationPopup().getMenu().size() > 0) {
-                    activity.getNotificationManager().getNotificationPopup().show();
+                if (activity.getNotificationManager().getAdapter().getNotificationScheduleList().size() > 0) {
+                    activity.getNotificationManager().show();
                 }
 
                 break;
@@ -246,13 +242,17 @@ public class FragmentController {
 
     }
 
-    public void showQuestionDialog (DialogInterface.OnClickListener interfaceClickListener, String message) {
+    public void showAlertDialog (DialogInterface.OnClickListener interfaceClickListener, String message, boolean isNeedNegativeButton) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage(message)
                 .setPositiveButton("Yes", interfaceClickListener)
-                .setNegativeButton("No", interfaceClickListener)
-                .setCancelable(false)
-        .show();
+                .setCancelable(false);
+
+        if (isNeedNegativeButton) {
+            builder.setNegativeButton("No", interfaceClickListener);
+        }
+
+        builder.show();
 
     }
 
@@ -278,6 +278,10 @@ public class FragmentController {
 
     public boolean isExistedUser () {
         return isExistedUser;
+    }
+
+    public void setExistedUser (boolean isExistedUser) {
+        this.isExistedUser = isExistedUser;
     }
 
 }

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 
@@ -22,7 +21,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.schedule_fragment, container, false);
-        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getController().getBridge().initScheduleLayout(this);
+        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getBookingController().initScheduleLayout(this);
         return view;
     }
 

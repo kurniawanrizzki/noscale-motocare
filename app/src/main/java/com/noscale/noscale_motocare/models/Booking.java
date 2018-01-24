@@ -1,7 +1,5 @@
 package com.noscale.noscale_motocare.models;
 
-import java.util.List;
-
 /**
  * Created by kurniawanrizzki on 21/01/18.
  */
@@ -13,7 +11,7 @@ public class Booking {
     private String status;
     private Float price;
     private String services;
-    private Garage garage;
+    private String garage;
     private String date;
     private String session;
 
@@ -57,11 +55,11 @@ public class Booking {
         this.services = services;
     }
 
-    public Garage getGarage() {
+    public String getGarage() {
         return garage;
     }
 
-    public void setGarage(Garage garage) {
+    public void setGarage(String garage) {
         this.garage = garage;
     }
 

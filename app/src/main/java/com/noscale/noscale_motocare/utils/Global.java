@@ -1,12 +1,15 @@
 package com.noscale.noscale_motocare.utils;
 
+import java.util.Calendar;
+
 /**
  * Created by kurniawanrrizki on 26/12/17.
  */
 
 public class Global {
 
-    public static final String HOSTNAME = "http://mss-febui.com/motocare/";
+//    public static final String HOSTNAME = "http://192.168.0.109:8000/";
+    public static final String HOSTNAME = "http://fithrahfauzan.com/motocare/";
 
     public static final boolean IS_DEMO_VERSION = false;
     public static final String DEFAULT_STRING_VALUE = "";
@@ -23,8 +26,6 @@ public class Global {
     public static final String HISTORY_TAG = "HISTORY";
     public static final String DETAIL_GARAGE_TAG = "DETAIL GARAGE";
     public static final String PROFILE_TAG = "PROFILE";
-    public static final String BOOKING_TAG = "BOOKING";
-    public static final String BOOKING_EXTRA_TAG = "BOOKING_EXTRA_TAG";
 
     public static final String EXISTED_USER_PREF = "EXISTED_USER_PREF";
 
@@ -37,10 +38,12 @@ public class Global {
     public static final int SCHEDULE_NOT_ACTIVE = 0;
     public static final int SCHEDULE_IS_ACTIVE = 1;
 
+    public static final int[] DAY = {Calendar.SUNDAY,Calendar.MONDAY,Calendar.TUESDAY,Calendar.WEDNESDAY,Calendar.THURSDAY,Calendar.FRIDAY,Calendar.SATURDAY};
+
+
     public static final String COMMUNICATION_INTENT = "com.noscale.motocare.communication";
     public static final String RESPONSE_DATA_EXTRA = "RESPONSE_DATA_EXTRA";
     public static final String STATUS_DATA_EXTRA = "STATUS_DATA_EXTRA";
-    public static final String SRC_DATA_EXTRA = "SRC_DATA_EXTRA";
 
     public static final String LOGIN_API = HOSTNAME+"api/v1/user/signin";
     public static final String REGISTER_API = HOSTNAME+"api/v1/user/register";
@@ -50,5 +53,6 @@ public class Global {
     public static final String GARAGE_SERVICE_API = HOSTNAME+"api/v1/bengkel/%1$d?token=%2$s";
     public static final String BOOKING_SERVICE_API =HOSTNAME+"api/v1/booking";
     public static final String BOOKING_EXTRA_SERVICE_API =HOSTNAME+"api/v1/booking?token=%1$s";
+    public static final String BOOKING_CANCEL_API = HOSTNAME+"api/v1/booking/%1$d?token=%2$s";
 
 }

@@ -39,14 +39,11 @@ public class RequestBuilder {
 
     /**
      * Build request based on parameter that was given;
-     * @param src from where request has been created;
      * @param url please to have a note if the url has been providen by backend firstly;
      * @param method {@link com.android.volley.Request.Method#POST} ,{@link com.android.volley.Request.Method#GET}
      * @param params parameter that used for each method;
      */
-    public void build (String src, String url, int method, final Object params) {
-
-        jsonRespListener.setSrc(src);
+    public void build (String url, int method, final Object params) {
 
         StringRequest request = new StringRequest(method, url, jsonRespListener, jsonRespListener) {
             @Override

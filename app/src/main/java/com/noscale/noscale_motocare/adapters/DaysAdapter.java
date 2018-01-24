@@ -6,11 +6,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.models.Day;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +44,10 @@ public class DaysAdapter extends BaseAdapter implements SpinnerAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        LinearLayout bg = new LinearLayout(context);
+        bg.setBackgroundResource(R.drawable.bg_spinner_list);
+        bg.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         TextView txt = new TextView(context);
-
         String day = days.get(position).getDay();
 
         txt.setPadding(16, 16, 16, 16);
@@ -53,10 +55,15 @@ public class DaysAdapter extends BaseAdapter implements SpinnerAdapter {
         txt.setGravity(Gravity.CENTER_VERTICAL);
         txt.setText(day);
         txt.setTextColor(ContextCompat.getColor(context, R.color.colorMBlack));
-        return txt;
+        bg.addView(txt);
+
+        return bg;
     }
 
     public View getView(int i, View view, ViewGroup viewgroup) {
+        LinearLayout bg = new LinearLayout(context);
+        bg.setBackgroundResource(R.drawable.bg_spinner_list);
+        bg.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         TextView txt = new TextView(context);
 
         String day = days.get(i).getDay();
@@ -67,10 +74,16 @@ public class DaysAdapter extends BaseAdapter implements SpinnerAdapter {
         txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
         txt.setText(day);
         txt.setTextColor(ContextCompat.getColor(context, R.color.colorMBlack));
-        return txt;
+        bg.addView(txt);
+        return bg;
     }
 
     public void setDays (List<Day> days) {
         this.days = days;
     }
+
+    public List<Day> getDays () {
+        return days;
+    }
+
 }

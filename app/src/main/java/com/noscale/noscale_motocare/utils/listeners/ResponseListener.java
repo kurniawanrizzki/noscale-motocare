@@ -6,11 +6,6 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.noscale.noscale_motocare.utils.Global;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
@@ -20,7 +15,6 @@ import java.nio.charset.Charset;
 public class ResponseListener implements Response.Listener<String>, Response.ErrorListener {
 
     private Context context;
-    private String src;
 
     public ResponseListener (Context context) {
         this.context = context;
@@ -38,10 +32,10 @@ public class ResponseListener implements Response.Listener<String>, Response.Err
                 Log.d("Motocare Error Response",errorResponse+"\n"+volleyError.getNetworkTimeMs());
             }
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         sendBroadcast(errorResponse, false);
 
@@ -58,13 +52,8 @@ public class ResponseListener implements Response.Listener<String>, Response.Err
         Intent communicationIntent = new Intent(Global.COMMUNICATION_INTENT);
         communicationIntent.putExtra(Global.RESPONSE_DATA_EXTRA, message);
         communicationIntent.putExtra(Global.STATUS_DATA_EXTRA, status);
-        communicationIntent.putExtra(Global.SRC_DATA_EXTRA, src);
         context.sendBroadcast(communicationIntent);
 
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
     }
 
 }

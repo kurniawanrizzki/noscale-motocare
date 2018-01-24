@@ -1,9 +1,8 @@
 package com.noscale.noscale_motocare.controllers;
 
-import android.support.v4.app.Fragment;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import com.android.volley.Request;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -19,8 +18,6 @@ import com.noscale.noscale_motocare.models.Booking;
 import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.Global;
 import com.noscale.noscale_motocare.utils.RequestBuilder;
-
-import java.util.ArrayList;
 
 /**
  * Created by kurniawanrizzki on 21/01/18.
@@ -42,8 +39,9 @@ public class BookingController {
     }
 
     private void initData () {
-        scheduleAdapter = new BookingFrameAdapter(fragment.getContext(), this, Global.SCHEDULE_TAG);
-        historyAdapter = new BookingFrameAdapter(fragment.getContext(), this, Global.HISTORY_TAG);
+        MainActivity activity = (MainActivity) fragment.getActivity();
+        scheduleAdapter = new BookingFrameAdapter(activity);
+        historyAdapter = new BookingFrameAdapter(activity);
     }
 
     public void initScheduleLayout (ScheduleFragment fragment) {
@@ -71,10 +69,8 @@ public class BookingController {
     public void requestData () {
 
         MainActivity activity = ((MainActivity) fragment.getActivity());
-        activity.getFragmentController().getDialog().show();
 
-        RequestBuilder.getInstance(fragment.getActivity()).build(
-                Global.BOOKING_EXTRA_TAG,
+        RequestBuilder.getInstance(activity).build(
                 String.format(
                         Global.BOOKING_EXTRA_SERVICE_API,
                         Auth.getInstance(activity).getUser().getToken()
@@ -85,10 +81,24 @@ public class BookingController {
 
     }
 
+    public void cancelBooking (int id) {
+        MainActivity activity = ((MainActivity) fragment.getActivity());
+
+        RequestBuilder.getInstance(fragment.getActivity()).build(
+                String.format(
+                        Global.BOOKING_CANCEL_API,
+                        id,
+                        Auth.getInstance(activity).getUser().getToken()
+                ),
+                Request.Method.DELETE,
+                null
+        );
+    }
+
     public void notifyDataSetChanged (String message) {
 
-        scheduleAdapter.setBookingList(new ArrayList<Booking>());
-        historyAdapter.setBookingList(new ArrayList<Booking>());
+        scheduleAdapter.getBookingList().clear();
+        historyAdapter.getBookingList().clear();
         JsonArray bookingListArray = new JsonParser().parse(message).getAsJsonArray();
 
         for (JsonElement bookingElement:bookingListArray) {
@@ -96,7 +106,7 @@ public class BookingController {
             JsonObject bookedJson = bookingElement.getAsJsonObject();
             Booking item = getBooking(bookedJson);
 
-            if (!item.getStatus().equals("done")) {
+            if (!item.getStatus().equals("done") && !item.getStatus().equals("canceled")) {
                 scheduleAdapter.getBookingList().add(
                         item
                 );
@@ -111,9 +121,30 @@ public class BookingController {
         scheduleAdapter.notifyDataSetChanged();
         historyAdapter.notifyDataSetChanged();
 
+        ((MainActivity) fragment.getActivity()).getNotificationManager()
+                .fire(scheduleAdapter.getBookingList());
+
     }
 
-    private Booking getBooking (JsonObject itemJson) {
+    public void notifyGarageHasDeleted() {
+
+        ((MainActivity) fragment.getActivity()).getFragmentController().showAlertDialog(
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                            ((MainActivity) fragment.getActivity()).getFragmentController().getDialog().show();
+                            requestData();
+
+                        }
+                    }
+                }
+                ,"You have been delete your service.", false);
+
+    }
+
+    public Booking getBooking (JsonObject itemJson) {
         Booking item = new Booking();
         item.setId(
                 itemJson.get("id").getAsInt()
@@ -137,7 +168,21 @@ public class BookingController {
                 itemJson.get("session_id").getAsString().equals(fragment.getString(R.string.date_first_session))?
                         fragment.getString(R.string.date_first_session):fragment.getString(R.string.date_second_session)
         );
+
+        item.setGarage(
+                itemJson.get("data_bengkel").getAsJsonObject().get("nama_bengkel").getAsString()
+        );
+
         return item;
     }
+
+    public BookingFrameAdapter getScheduleAdapter () {
+        return scheduleAdapter;
+    }
+
+    public BookingFrameAdapter getHistoryAdapter () {
+        return historyAdapter;
+    }
+
 
 }

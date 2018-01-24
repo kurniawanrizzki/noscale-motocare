@@ -3,7 +3,6 @@ package com.noscale.noscale_motocare.utils;
 import com.noscale.noscale_motocare.models.Garage;
 import com.noscale.noscale_motocare.models.Schedule;
 import com.noscale.noscale_motocare.models.User;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

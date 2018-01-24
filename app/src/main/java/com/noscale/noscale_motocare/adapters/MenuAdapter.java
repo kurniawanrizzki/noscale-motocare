@@ -3,7 +3,6 @@ package com.noscale.noscale_motocare.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
 import com.noscale.noscale_motocare.controllers.MenuController;
 
 /**

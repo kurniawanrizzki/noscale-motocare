@@ -1,8 +1,6 @@
 package com.noscale.noscale_motocare.utils;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-
 import com.android.volley.Request;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -36,7 +34,7 @@ public class Auth {
         HashMap<String, String> loginParams = new HashMap<>();
         loginParams.put("email",username);
         loginParams.put("password",password);
-        RequestBuilder.getInstance(ctx).build(Global.LOGIN_TAG, Global.LOGIN_API, Request.Method.POST, loginParams);
+        RequestBuilder.getInstance(ctx).build(Global.LOGIN_API, Request.Method.POST, loginParams);
 
     }
 
@@ -47,7 +45,7 @@ public class Auth {
         registerParams.put("password", password);
         registerParams.put("email", email);
         registerParams.put("no_telepon", phone);
-        RequestBuilder.getInstance(ctx).build(Global.REGISTER_TAG, Global.REGISTER_API, Request.Method.POST, registerParams);
+        RequestBuilder.getInstance(ctx).build(Global.REGISTER_API, Request.Method.POST, registerParams);
     }
 
     public User getUserContentFromResponse (String content, String token) {

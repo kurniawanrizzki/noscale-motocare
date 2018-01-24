@@ -1,18 +1,12 @@
 package com.noscale.noscale_motocare.controllers;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.content.ContextCompat;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.gson.JsonArray;
@@ -22,7 +16,6 @@ import com.google.gson.JsonParser;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 import com.noscale.noscale_motocare.adapters.GarageFrameAdapter;
-import com.noscale.noscale_motocare.adapters.MenuAdapter;
 import com.noscale.noscale_motocare.fragments.DetailGarageFragment;
 import com.noscale.noscale_motocare.fragments.GarageFragment;
 import com.noscale.noscale_motocare.fragments.MenuFragment;
@@ -33,11 +26,6 @@ import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.Global;
 import com.noscale.noscale_motocare.utils.MBookingDialog;
 import com.noscale.noscale_motocare.utils.RequestBuilder;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +49,10 @@ public class GarageController {
     private LinearLayout bookingButton;
     private MBookingDialog mDialog;
 
-    private boolean isRequestHasBeenExecuted;
-
     public GarageController (GarageFragment fragment) {
         this.activity = (MainActivity) fragment.getActivity();
         this.fragment = fragment;
+        requestData();
         initData();
         initLayout();
     }
@@ -74,11 +61,7 @@ public class GarageController {
         adapter = new GarageFrameAdapter(this);
         detailGarageFragment = new DetailGarageFragment();
         mDialog = new MBookingDialog(activity);
-
-        if (activity.getFragmentController().isExistedUser() && !isRequestHasBeenExecuted) {
-            requestData();
-            isRequestHasBeenExecuted = true;
-        }
+        requestData();
 
     }
 
@@ -119,7 +102,6 @@ public class GarageController {
         activity.getFragmentController().getDialog().show();
 
         RequestBuilder.getInstance(fragment.getActivity()).build(
-                Global.GARAGE_TAG,
                 String.format(
                         Global.GARAGE_LIST_API,
                         Auth.getInstance(activity).getUser().getToken()
@@ -145,6 +127,7 @@ public class GarageController {
         }
 
         adapter.notifyDataSetChanged();
+        activity.getFragmentController().getMenuFragment().getBookingController().requestData();
 
     }
 
@@ -278,7 +261,6 @@ public class GarageController {
 
         activity.getFragmentController().getDialog().show();
         RequestBuilder.getInstance(activity).build(
-                Global.DETAIL_GARAGE_TAG,
                 String.format(
                         Global.GARAGE_SERVICE_API,
                         garageId,
@@ -290,13 +272,29 @@ public class GarageController {
 
     }
 
-    public void goToMySchedule (String message) {
+    public void notifyGarageHasBooked() {
+
+        mDialog.dismiss();
+
+        final BookingController controller = activity.getFragmentController().getMenuFragment().getBookingController();
 
         MenuFragment fragment = activity.getFragmentController().getMenuFragment();
         activity.getFragmentController().showFragment(fragment);
-        fragment.getController().goToAnotherTab(MenuAdapter.SCHEDULE_PAGE);
 
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+        activity.getFragmentController().showAlertDialog(
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                            mDialog.setCurrent(null);
+                            activity.getFragmentController().getDialog().show();
+                            controller.requestData();
+
+                        }
+                    }
+                }
+        ,"You have been booked the garage.", false);
 
     }
 
@@ -306,8 +304,8 @@ public class GarageController {
         v.setImageUrl(url,loader);
     }
 
-    public MBookingDialog getMDialog () {
-        return mDialog;
+    public GarageFrameAdapter getAdapter () {
+        return adapter;
     }
 
 }

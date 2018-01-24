@@ -3,7 +3,6 @@ package com.noscale.noscale_motocare.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Window;
-
 import com.noscale.noscale_motocare.R;
 
 /**

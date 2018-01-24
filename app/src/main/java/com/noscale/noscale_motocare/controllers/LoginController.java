@@ -1,12 +1,10 @@
 package com.noscale.noscale_motocare.controllers;
 
-import android.util.Patterns;
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 import com.noscale.noscale_motocare.fragments.LoginFragment;
@@ -17,8 +15,6 @@ import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.DummySingleton;
 import com.noscale.noscale_motocare.utils.Global;
 import com.noscale.noscale_motocare.utils.MPreference;
-
-import java.util.HashMap;
 
 /**
  * Created by kurniawanrrizki on 26/12/17.
@@ -109,15 +105,29 @@ public class LoginController {
                 content, token
         );
 
-        String userJson = Auth.getInstance(activity).setUser(createdUser);
+        final String userJson = Auth.getInstance(activity).setUser(createdUser);
 
-        MPreference.getInstance(activity).putStringToMPreference(userJson, Global.EXISTED_USER_PREF);
-        activity.getFragmentController().getLoginFragment().getController().goToHomePage();
-        Toast.makeText(activity,String.format(
-                activity.getString(R.string.user_welcome)
-                , createdUser.getUsername()
-        ),Toast.LENGTH_LONG).show();
+        activity.getFragmentController().showAlertDialog(
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            MPreference.getInstance(activity).putStringToMPreference(userJson, Global.EXISTED_USER_PREF);
 
+                            GarageController grgController = activity.getFragmentController().getMenuFragment().getMenuController().getGarageFragment().getController();
+
+                            if (!activity.getFragmentController().isExistedUser() && (null != grgController)) {
+                                grgController.requestData();
+                            }
+
+                            activity.getFragmentController().getLoginFragment().getController().goToHomePage();
+                        }
+                    }
+                }
+        ,String.format(
+                        activity.getString(R.string.user_welcome)
+                        , createdUser.getUsername()
+        ), false);
 
     }
 
@@ -127,6 +137,9 @@ public class LoginController {
     }
 
     public void logOut (String message) {
+        activity.getNotificationManager().clear();
+        activity.getFragmentController().setExistedUser(false);
+        activity.getFragmentController().getMenuFragment().getMenuController().clearData();
         MPreference.getInstance(activity).putStringToMPreference(null, Global.EXISTED_USER_PREF);
 
         mUsername.setText(Global.DEFAULT_STRING_VALUE);

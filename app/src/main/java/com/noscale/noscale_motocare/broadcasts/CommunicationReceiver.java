@@ -4,15 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
-import com.noscale.noscale_motocare.models.User;
-import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.Global;
-import com.noscale.noscale_motocare.utils.MPreference;
 
 /**
  * Created by kurniawanrizzki on 17/01/18.
@@ -21,6 +17,15 @@ import com.noscale.noscale_motocare.utils.MPreference;
 public class CommunicationReceiver extends BroadcastReceiver {
 
     private MainActivity activity;
+    private static final int LOGIN_RES = 0;
+    private static final int REGISTER_RES = 1;
+    private static final int PROFILEUPDATED_RES = 2;
+    private static final int PROFILEPASSWORDUPDATED_RES = 3;
+    private static final int GARAGE_LIST_RES = 4;
+    private static final int GARAGE_DETAIL_RES = 5;
+    private static final int BOOKING_LIST_RES = 6;
+    private static final int BOOKING_RES = 7;
+    private static final int CANCELBOOKING_RES = 8;
 
     public CommunicationReceiver (MainActivity activity) {
         this.activity = activity;
@@ -28,61 +33,129 @@ public class CommunicationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String src = intent.getStringExtra(Global.SRC_DATA_EXTRA);
+
         String message = intent.getStringExtra(Global.RESPONSE_DATA_EXTRA);
         boolean status = intent.getBooleanExtra(Global.STATUS_DATA_EXTRA, false);
 
         activity.getFragmentController().getDialog().hide();
 
-        switch (src) {
-            case Global.GARAGE_TAG :
-                onGarageListResponse(message, src, status);
-                break;
-            case Global.DETAIL_GARAGE_TAG :
-                onDetailGarageResponse(message, src, status);
-                break;
-            case Global.PROFILE_TAG :
-                onProfileEdited(message,src,status);
-                break;
-            case Global.BOOKING_TAG :
-                onBooked(message, src, status);
-                break;
-            case Global.BOOKING_EXTRA_TAG :
-                onBookingListResponse(message, src, status);
-                break;
-            default:
-                login(message, src, status);
-                break;
+        if ((null != message) && !message.contains("token_expired") && !message.contains("token_invalid")) {
+
+            if (!message.contains("errors")) {
+
+                Response response = responseReader(message);
+
+                if ((null != response) && status) {
+
+                    switch (response.getResCode()) {
+                        case PROFILEUPDATED_RES:
+                            activity.getFragmentController().getMenuFragment().getMenuController().getProfileFragment()
+                                    .getController().notifyDataSetChanged(response.getContent());
+                            break;
+                        case PROFILEPASSWORDUPDATED_RES:
+                            String logoutMessage = response.getResCode()+"%1$s";
+                            activity.getFragmentController().getLoginFragment().getController().logOut(
+                                    String.format(
+                                            logoutMessage,
+                                            activity.getString(R.string.relogin_text)
+                                    )
+                            );
+                            break;
+                        case GARAGE_LIST_RES:
+                            onGarageListResponse(response);
+                            break;
+                        case GARAGE_DETAIL_RES :
+                            onDetailGarageResponse(response);
+                            break;
+                        case BOOKING_LIST_RES:
+                            onBookingListResponse(response);
+                            break;
+                        case BOOKING_RES :
+                            onBooked();
+                            break;
+                        case CANCELBOOKING_RES :
+                            onDeleted();
+                            break;
+                        default:
+                            login(response);
+                            break;
+                    }
+
+                }
+
+
+            } else {
+                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
+            }
+
+            return;
+
         }
+
+        showErrorResponse(message);
 
     }
 
-    private Response responseReader (String response, String tag) {
+    private Response responseReader (String response) {
 
         JsonParser responseParser = new JsonParser();
         JsonObject responseObject = responseParser.parse(response).getAsJsonObject();
 
-        String content = null;
+        int resCode = LOGIN_RES;
+        String content;
         Response res = new Response();
+        String msg = responseObject.get("msg").getAsString();
 
-        if (tag.equals(Global.LOGIN_TAG) || tag.equals(Global.REGISTER_TAG) || tag.equals(Global.PROFILE_TAG)) {
+        if (msg.equals(activity.getString(R.string.user_signed_response))) {
+
             content = "user";
+            res.setToken(responseObject.get("token").getAsString());
 
-            if (tag.equals(Global.LOGIN_TAG) || tag.equals(Global.REGISTER_TAG)) {
-                res.setToken(responseObject.get("token").getAsString());
-            }
+        } else if (msg.equals(activity.getString(R.string.user_created_response))) {
 
-        } else if (tag.equals(Global.GARAGE_TAG)) {
+            content = "user";
+            resCode = REGISTER_RES;
+            res.setToken(responseObject.get("token").getAsString());
+
+        } else if (msg.equals(activity.getString(R.string.user_udpated_response))) {
+
+            content = "user";
+            resCode = PROFILEUPDATED_RES;
+
+        } else if (msg.equals(activity.getString(R.string.user_pass_updated_response))) {
+
+            content = "user";
+            resCode = PROFILEPASSWORDUPDATED_RES;
+
+        } else if (msg.equals(activity.getString(R.string.bengkel_list_response))) {
+
             content = "bengkels";
-        } else if (tag.equals(Global.DETAIL_GARAGE_TAG)) {
+            resCode = GARAGE_LIST_RES;
+
+        } else if (msg.equals(activity.getString(R.string.bengkel_info_response))) {
+
             content = "bengkel";
-        } else if (tag.equals(Global.BOOKING_TAG)) {
+            resCode = GARAGE_DETAIL_RES;
+
+        } else if (msg.equals(activity.getString(R.string.booked_response))) {
+
             content = "booked_service";
-        } else if (tag.equals(Global.BOOKING_EXTRA_TAG)) {
+            resCode = BOOKING_RES;
+
+        } else if (msg.equals(activity.getString(R.string.booked_list_response))) {
+
             content = "booking";
+            resCode = BOOKING_LIST_RES;
+
+        } else if (msg.equals("User canceled the service")) {
+            content = "bengkel";
+            resCode = CANCELBOOKING_RES;
+        } else {
+            Toast.makeText(activity,msg,Toast.LENGTH_LONG).show();
+            return null;
         }
 
-        res.setMsg(responseObject.get("msg").getAsString());
+        res.setResCode(resCode);
         res.setContent(responseObject.get(content).toString());
 
         return res;
@@ -97,6 +170,8 @@ public class CommunicationReceiver extends BroadcastReceiver {
 
         if (null != errorObject.get("errors").getAsJsonObject().get("email")) {
             errorMessage = errorObject.get("errors").getAsJsonObject().get("email").getAsString();
+        } else if (null != errorObject.get("resCode")) {
+            errorMessage = errorObject.get("resCode").getAsString();
         } else if (null != errorObject.get("msg")) {
             errorMessage = errorObject.get("msg").getAsString();
         }
@@ -104,102 +179,21 @@ public class CommunicationReceiver extends BroadcastReceiver {
         return errorMessage;
     }
 
+    private void showErrorResponse (String message) {
 
-    private void login (String message, String tag, boolean status) {
+        String errorResponse;
+        try {
 
-        if (status) {
+            errorResponse = (null == message)?String.format(
+                    activity.getString(R.string.failed_connect_to),Global.HOSTNAME
+            ):new JsonParser().parse(message).getAsJsonObject().get("msg").getAsString();
 
-            if (!message.contains("errors")) {
-                Response response = responseReader(message, tag);
-
-                if (response.getMsg().equals(activity.getString(R.string.user_created_response)) || response.getMsg().equals(activity.getString(R.string.user_signed_response))) {
-                    activity.getFragmentController().getLoginFragment().getController().login(
-                            response.getContent(),
-                            response.getToken()
-                    );
-                    activity.getFragmentController().getMenuFragment().getController().getGarageFragment().getController().requestData();
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
-
-            return;
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorResponse = new JsonParser().parse(message).getAsString();
         }
 
-        String errorResponse = message.equals(null)?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsJsonObject().get("msg").getAsString();
-
-        Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
-
-    }
-
-    private void onGarageListResponse (String message, String tag, boolean status) {
-
-        if (status) {
-
-            if (!message.contains("errors")) {
-                Response response = responseReader(message,tag);
-
-                if (response.getMsg().equals(activity.getString(R.string.bengkel_list_response))) {
-                    activity.getFragmentController().getMenuFragment().getController().
-                            getGarageFragment().getController().notifyDataSetChanged(response.getContent());
-                    activity.getFragmentController().getMenuFragment().getController().getBridge().requestData();
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
-
-            return;
-        }
-
-        String errorResponse = null == message?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsString();
-
-        if (errorResponse.equals(activity.getString(R.string.user_token_expired))) {
-            activity.getFragmentController().getLoginFragment().getController().logOut(errorResponse);
-            return;
-        }
-
-        Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
-
-    }
-
-    public void onDetailGarageResponse (String message, String tag, boolean status) {
-        if (status) {
-
-            if (!message.contains("errors")) {
-                Response response = responseReader(message,tag);
-
-                if (response.getMsg().equals(activity.getString(R.string.bengkel_info_response))) {
-                    activity.getFragmentController().getMenuFragment().getController().getGarageFragment().getController().goToDetailPage(response.getContent());
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
-
-            return;
-        }
-
-        String errorResponse = null == message?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsString();
-
-        if (errorResponse.equals(activity.getString(R.string.user_token_expired))) {
+        if (errorResponse.equals(activity.getString(R.string.user_token_expired)) || errorResponse.equals(activity.getString(R.string.user_tokent_invalid))) {
             activity.getFragmentController().getLoginFragment().getController().logOut(errorResponse);
             return;
         }
@@ -207,126 +201,55 @@ public class CommunicationReceiver extends BroadcastReceiver {
         Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
     }
 
-    public void onProfileEdited (String message, String tag, boolean status) {
-        if (status) {
 
-            if (!message.contains("errors")) {
-                Response response = responseReader(message,tag);
+    private void login (Response response) {
 
-                if (response.getMsg().equals(activity.getString(R.string.user_udpated_response))) {
-                    activity.getFragmentController().getMenuFragment().getController().getProfileFragment()
-                            .getController().notifyDataSetChanged(response.getContent());
-                } else if (response.getMsg().equals(activity.getString(R.string.user_pass_updated_response))){
-                    String logoutMessage = response.getMsg()+"%1$s";
-                    activity.getFragmentController().getLoginFragment().getController().logOut(
-                            String.format(
-                                    logoutMessage,
-                                    activity.getString(R.string.relogin_text)
-                            )
-                    );
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
+        activity.getFragmentController().getLoginFragment().getController().login(
+                response.getContent(),
+                response.getToken()
+        );
 
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
-
-            return;
-        }
-
-        String errorResponse = null == message?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsString();
-
-        if (errorResponse.equals(activity.getString(R.string.user_token_expired))) {
-            activity.getFragmentController().getLoginFragment().getController().logOut(errorResponse);
-            return;
-        }
-
-        Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
     }
 
-    private void onBooked (String message, String tag ,boolean status) {
+    private void onGarageListResponse (Response response) {
 
-        activity.getFragmentController().getMenuFragment().getController().getGarageFragment().getController()
-                .getMDialog().dismiss();
+        activity.getFragmentController().getMenuFragment().getMenuController().
+                getGarageFragment().getController().notifyDataSetChanged(response.getContent());
 
-        if (status) {
-
-            if (!message.contains("errors")) {
-                Response response = responseReader(message,tag);
-
-                if (response.getMsg().equals(activity.getString(R.string.booked_text))) {
-                    activity.getFragmentController().getMenuFragment().getController().getGarageFragment().getController().goToMySchedule(response.getMsg());
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
-
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
-
-            return;
-        }
-
-        String errorResponse = null == message?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsString();
-
-        if (errorResponse.equals(activity.getString(R.string.user_token_expired))) {
-            activity.getFragmentController().getLoginFragment().getController().logOut(errorResponse);
-            return;
-        }
-
-        Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
     }
 
-    private void onBookingListResponse (String message, String tag, boolean status) {
-        if (status) {
+    public void onDetailGarageResponse (Response response) {
+        activity.getFragmentController().getMenuFragment().getMenuController().getGarageFragment().getController().goToDetailPage(response.getContent());
+    }
 
-            if (!message.contains("errors")) {
-                Response response = responseReader(message,tag);
+    private void onBooked () {
 
-                if (response.getMsg().equals(activity.getString(R.string.book_response))) {
-                    activity.getFragmentController().getMenuFragment().getController().getBridge().notifyDataSetChanged(response.getContent());
-                } else {
-                    Toast.makeText(activity,response.getMsg(),Toast.LENGTH_LONG).show();
-                }
+        activity.getFragmentController().getMenuFragment().getMenuController()
+                .getGarageFragment().getController().notifyGarageHasBooked();
 
-            } else {
-                Toast.makeText(activity,errorReader(message),Toast.LENGTH_LONG).show();
-            }
+    }
 
-            return;
-        }
+    private void onDeleted () {
+        activity.getFragmentController().getMenuFragment().getBookingController().notifyGarageHasDeleted();
+    }
 
-        String errorResponse = null == message?
-                String.format(
-                        activity.getString(R.string.failed_connect_to),Global.HOSTNAME
-                ):new JsonParser().parse(message).getAsString();
+    private void onBookingListResponse (Response response) {
+        activity.getFragmentController().getMenuFragment()
+                .getBookingController().notifyDataSetChanged(response.getContent());
 
-        if (errorResponse.equals(activity.getString(R.string.user_token_expired))) {
-            activity.getFragmentController().getLoginFragment().getController().logOut(errorResponse);
-            return;
-        }
-
-        Toast.makeText(activity, errorResponse, Toast.LENGTH_LONG).show();
     }
 
     private class Response {
-        private String msg;
+        private int resCode;
         private String content;
         private String token;
 
-        public String getMsg() {
-            return msg;
+        public int getResCode() {
+            return resCode;
         }
 
-        public void setMsg(String msg) {
-            this.msg = msg;
+        public void setResCode(int resCode) {
+            this.resCode = resCode;
         }
 
         public String getContent() {

@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.noscale.noscale_motocare.R;
-
 import java.util.ArrayList;
 
 /**

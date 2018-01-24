@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/garage_wrapper"
@@ -70,12 +70,26 @@
                 />
 
             <TextView
+                android:id="@+id/booking_garage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8pt"
+                android:textStyle="italic"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/booking_code"
+                android:layout_marginLeft="@dimen/m10dp"
+                android:layout_marginBottom="@dimen/m5dp"
+                android:layout_marginTop="@dimen/m5dp"
+                android:textColor="@color/colorMBlack"
+                />
+
+            <TextView
                 android:id="@+id/booking_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="6pt"
                 android:textColor="@color/colorMGreen"
-                android:layout_below="@id/booking_code"
+                android:layout_below="@id/booking_garage"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/m10dp"
                 android:layout_marginBottom="@dimen/m2dp"
@@ -124,6 +138,29 @@
                     />
 
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/delete_button_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/booking_price_layout"
+                android:background="@color/colorMRed"
+                android:layout_marginTop="@dimen/m5dp"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/delete_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete_button"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/m10dp"
+                    android:layout_marginBottom="@dimen/m10dp"
+                    />
+
+            </LinearLayout>
 
         </RelativeLayout>
 

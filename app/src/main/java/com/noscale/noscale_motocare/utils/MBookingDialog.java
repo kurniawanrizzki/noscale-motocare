@@ -8,15 +8,14 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-
+import android.widget.Toast;
 import com.android.volley.Request;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 import com.noscale.noscale_motocare.adapters.DaysAdapter;
 import com.noscale.noscale_motocare.adapters.ServicesAdapter;
+import com.noscale.noscale_motocare.models.Day;
 import com.noscale.noscale_motocare.models.Garage;
-import com.noscale.noscale_motocare.models.Service;
-
 import java.util.HashMap;
 
 /**
@@ -39,6 +38,7 @@ public class MBookingDialog {
     private DaysAdapter daysAdapter;
 
     private HashMap<String,String> requestParams;
+    String today;
 
     public MBookingDialog (MainActivity activity) {
         this.activity = activity;
@@ -47,12 +47,6 @@ public class MBookingDialog {
         daysAdapter = new DaysAdapter(activity);
         requestParams = new HashMap<>();
 
-        dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.booking_dialog_layout);
-        dialog.setCanceledOnTouchOutside(false);
-        initLayout();
-        initEvent();
     }
 
     private void initLayout () {
@@ -82,6 +76,7 @@ public class MBookingDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 requestParams.put("hari_id", String.valueOf(daysAdapter.getItemId(position)));
+                today = ((Day) daysAdapter.getItem(position)).getDay();
             }
 
             @Override
@@ -100,18 +95,36 @@ public class MBookingDialog {
         mBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.getFragmentController().getDialog().show();
-                onRequestBooking();
+
+                if (!activity.getNotificationManager().isToday(today)) {
+                    activity.getFragmentController().getDialog().show();
+                    onRequestBooking();
+                    return;
+                }
+
+                Toast.makeText(activity, "You're not allowed to set the schedule by today.", Toast.LENGTH_LONG).show();
+
             }
         });
     }
 
     public void show () {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.booking_dialog_layout);
+        dialog.setCanceledOnTouchOutside(false);
+
+        initLayout();
+        initEvent();
+
         daysAdapter.setDays(current.getDays());
         servicesAdapter.setServiceList(current.getServiceList());
         servicesAdapter.notifyDataSetChanged();
         daysAdapter.notifyDataSetChanged();
+
         dialog.show();
+
     }
 
     public void setCurrent (Garage current) {
@@ -137,7 +150,6 @@ public class MBookingDialog {
         requestParams.put("token", Auth.getInstance(activity).getUser().getToken());
 
         RequestBuilder.getInstance(activity).build(
-                Global.BOOKING_TAG,
                 Global.BOOKING_SERVICE_API,
                 Request.Method.POST,
                 requestParams

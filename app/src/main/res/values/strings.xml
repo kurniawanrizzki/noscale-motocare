@@ -24,10 +24,12 @@
     <string name="bengkel_info_response">Bengkel information</string>
     <string name="user_udpated_response">User updated</string>
     <string name="user_pass_updated_response">User\'s password updated</string>
-    <string name="book_response">Booking information</string>
-    <string name="booked_text">Success booked the service</string>
+    <string name="booked_list_response">Booking information</string>
+    <string name="booked_response">Success booked the service</string>
     <string name="user_token_expired">token_expired</string>
+    <string name="user_tokent_invalid">token_invalid</string>
     <string name="user_welcome">You are login as %1$s.</string>
+    <string name="delete_response">User canceled the service</string>
     <string name="failed_connect_to">Connection to %1$s unreachable, Please to try again.</string>
     <string name="logout_message">Are you sure want to log out?</string>
     <string name="user_information_changed">User information has been changed.</string>
@@ -51,5 +53,6 @@
     <string name="time_radio">Session Time</string>
     <string name="date_first_session">08:00 - 12:00</string>
     <string name="date_second_session">13:00 - 16:00</string>
+    <string name="delete_button">CANCEL BOOKING</string>
 
 </resources>

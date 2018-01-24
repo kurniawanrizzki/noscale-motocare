@@ -3,7 +3,6 @@ package com.noscale.noscale_motocare.controllers;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 import com.noscale.noscale_motocare.adapters.MenuAdapter;
@@ -12,7 +11,6 @@ import com.noscale.noscale_motocare.fragments.HistoryFragment;
 import com.noscale.noscale_motocare.fragments.MenuFragment;
 import com.noscale.noscale_motocare.fragments.ProfileFragment;
 import com.noscale.noscale_motocare.fragments.ScheduleFragment;
-import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.Global;
 import com.noscale.noscale_motocare.utils.listeners.MenuSelectedListener;
 
@@ -31,7 +29,6 @@ public class MenuController {
     private HistoryFragment historyFragment;
     private ScheduleFragment scheduleFragment;
     private ProfileFragment profileFragment;
-    private BookingController bridge;
 
     public MenuController (MenuFragment fragment) {
         this.fragment = fragment;
@@ -76,7 +73,7 @@ public class MenuController {
 
         menuAdapter = new MenuAdapter(fm,this);
         menuPager.setAdapter(menuAdapter);
-        bridge = new BookingController(fragment);
+
     }
 
     private void initEvent () {
@@ -90,6 +87,16 @@ public class MenuController {
         profileFragment.getController().setProfileText();
         profileFragment.getController().resetForm(null, null);
         activity.getFragmentController().showFragment(profileFragment);
+    }
+
+    public void clearData () {
+        garageFragment.getController().getAdapter().getGarageList().clear();
+        fragment.getBookingController().getScheduleAdapter().getBookingList().clear();
+        fragment.getBookingController().getHistoryAdapter().getBookingList().clear();
+
+        garageFragment.getController().getAdapter().notifyDataSetChanged();
+        fragment.getBookingController().getScheduleAdapter().notifyDataSetChanged();
+        fragment.getBookingController().getHistoryAdapter().notifyDataSetChanged();
     }
 
     /**
@@ -114,10 +121,6 @@ public class MenuController {
 
     public ProfileFragment getProfileFragment () {
         return profileFragment;
-    }
-
-    public BookingController getBridge () {
-        return bridge;
     }
 
 }

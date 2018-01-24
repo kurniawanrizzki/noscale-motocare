@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.adapters.LeftDrawerAdapter;
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == LOGOUT) {
-                    fragmentController.showQuestionDialog(
+                    fragmentController.showAlertDialog(
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -85,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                     dialog.dismiss();
                                 }
-                            }, getString(R.string.logout_message)
+                            }, getString(R.string.logout_message), true
                     );
-                } else {
-                    fragmentController.getMenuFragment().getController().goToProfilePage();
+                } else if (position == PROFILE) {
+                    fragmentController.getMenuFragment().getMenuController().goToProfilePage();
                 }
             }
         });

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -33,7 +32,7 @@ public class DetailGarageFragment extends Fragment implements OnMapReadyCallback
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_detail_garage, container, false);
-        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getController()
+        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getMenuController()
                 .getGarageFragment().getController()
                 .initSubLayout(view);
         initMap(savedInstanceState);

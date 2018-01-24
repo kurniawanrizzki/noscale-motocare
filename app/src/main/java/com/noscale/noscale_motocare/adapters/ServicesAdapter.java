@@ -1,19 +1,16 @@
 package com.noscale.noscale_motocare.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.models.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +45,12 @@ public class ServicesAdapter extends BaseAdapter implements SpinnerAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        TextView txt = new TextView(context);
 
+        LinearLayout bg = new LinearLayout(context);
+        bg.setBackgroundResource(R.drawable.bg_spinner_list);
+        bg.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        TextView txt = new TextView(context);
         Service item = serviceList.get(position);
 
         txt.setPadding(16, 16, 16, 16);
@@ -57,10 +58,17 @@ public class ServicesAdapter extends BaseAdapter implements SpinnerAdapter {
         txt.setGravity(Gravity.CENTER_VERTICAL);
         txt.setText(item.getServiceName());
         txt.setTextColor(ContextCompat.getColor(context, R.color.colorMBlack));
-        return txt;
+
+        bg.addView(txt);
+
+        return bg;
     }
 
     public View getView(int i, View view, ViewGroup viewgroup) {
+
+        LinearLayout bg = new LinearLayout(context);
+        bg.setBackgroundResource(R.drawable.bg_spinner_list);
+        bg.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         TextView txt = new TextView(context);
 
         Service item = serviceList.get(i);
@@ -71,11 +79,17 @@ public class ServicesAdapter extends BaseAdapter implements SpinnerAdapter {
         txt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_down, 0);
         txt.setText(item.getServiceName());
         txt.setTextColor(ContextCompat.getColor(context, R.color.colorMBlack));
-        return txt;
+        bg.addView(txt);
+
+        return bg;
     }
 
     public void setServiceList (List<Service> serviceList) {
         this.serviceList = serviceList;
+    }
+
+    public List<Service> getServiceList () {
+        return serviceList;
     }
 
 }

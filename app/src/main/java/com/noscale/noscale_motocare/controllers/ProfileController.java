@@ -6,8 +6,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
@@ -17,7 +15,6 @@ import com.noscale.noscale_motocare.utils.Auth;
 import com.noscale.noscale_motocare.utils.Global;
 import com.noscale.noscale_motocare.utils.MPreference;
 import com.noscale.noscale_motocare.utils.RequestBuilder;
-
 import java.util.HashMap;
 
 /**
@@ -101,7 +98,7 @@ public class ProfileController {
             @Override
             public void onClick(final View v) {
                 if (isFormValidated()) {
-                    ((MainActivity) fragment.getActivity()).getFragmentController().showQuestionDialog(
+                    ((MainActivity) fragment.getActivity()).getFragmentController().showAlertDialog(
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -115,7 +112,7 @@ public class ProfileController {
                                     }
                                     dialog.dismiss();
                                 }
-                            }, fragment.getActivity().getString(R.string.change_form_question)
+                            }, fragment.getActivity().getString(R.string.change_form_question),true
                     );
                 }
             }
@@ -134,7 +131,7 @@ public class ProfileController {
             @Override
             public void onClick(final View v) {
                 if (isPasswordValidated()) {
-                    ((MainActivity) fragment.getActivity()).getFragmentController().showQuestionDialog(new DialogInterface.OnClickListener() {
+                    ((MainActivity) fragment.getActivity()).getFragmentController().showAlertDialog(new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (which == DialogInterface.BUTTON_POSITIVE) {
@@ -146,7 +143,7 @@ public class ProfileController {
                             }
                             dialog.dismiss();
                         }
-                    }, fragment.getActivity().getString(R.string.change_form_question));
+                    }, fragment.getActivity().getString(R.string.change_form_question), true);
                 }
             }
         });
@@ -243,7 +240,6 @@ public class ProfileController {
     private void requestToStore (String url, HashMap<String, String> params) {
         ((MainActivity) fragment.getActivity()).getFragmentController().getDialog().show();
         RequestBuilder.getInstance(fragment.getContext()).build(
-                Global.PROFILE_TAG,
                 url,
                 Request.Method.POST,
                 params
@@ -253,14 +249,21 @@ public class ProfileController {
     public void notifyDataSetChanged(String response) {
 
         String token = Auth.getInstance(fragment.getContext()).getUser().getToken();
-        User changedUserInfo = Auth.getInstance(fragment.getContext()).getUserContentFromResponse(response,token);
-        String changedUserJson = Auth.getInstance(fragment.getContext()).setUser(changedUserInfo);
+        final User changedUserInfo = Auth.getInstance(fragment.getContext()).getUserContentFromResponse(response,token);
+        final String changedUserJson = Auth.getInstance(fragment.getContext()).setUser(changedUserInfo);
 
-        MPreference.getInstance(fragment.getContext()).putStringToMPreference(changedUserJson, Global.EXISTED_USER_PREF);
-        resetForm(changedUserInfo.getUsername(), changedUserInfo.getPhone());
-        setProfileText();
-
-        Toast.makeText(fragment.getContext(),fragment.getContext().getString(R.string.user_information_changed),Toast.LENGTH_LONG).show();
+        ((MainActivity) fragment.getActivity()).getFragmentController().showAlertDialog(
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            MPreference.getInstance(fragment.getContext()).putStringToMPreference(changedUserJson, Global.EXISTED_USER_PREF);
+                            resetForm(changedUserInfo.getUsername(), changedUserInfo.getPhone());
+                            setProfileText();
+                        }
+                    }
+                }
+        ,fragment.getContext().getString(R.string.user_information_changed), false);
 
     }
 

@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.noscale.noscale_motocare.R;
 import com.noscale.noscale_motocare.activities.MainActivity;
 
@@ -22,7 +21,7 @@ public class HistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_history, container, false);
-        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getController().getBridge().initHistoryLayout(this);
+        ((MainActivity) getActivity()).getFragmentController().getMenuFragment().getBookingController().initHistoryLayout(this);
         return view;
     }
 
