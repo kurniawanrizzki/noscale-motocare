@@ -1,7 +1,10 @@
 package com.noscale.noscale_motocare.utils;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import com.noscale.noscale_motocare.R;
@@ -33,15 +36,17 @@ public class NotificationManager {
 
     public void initPopup() {
         notificationMenu = activity.findViewById(R.id.notification);
-        notificationPopup = new PopupWindow(activity);
-
         adapter = new NotificationAdapter(activity);
-        View layout = activity.getLayoutInflater().inflate(R.layout.notification_layout,null);
+
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.notification_layout, (ViewGroup) activity.findViewById(R.id.popup_element));
+
+        notificationPopup = new PopupWindow(layout, 700, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+        notificationPopup.setBackgroundDrawable(ContextCompat.getDrawable(activity, R.color.colorMOrange));
+        notificationPopup.setOutsideTouchable(true);
+
         ListView notificationList = (ListView) layout.findViewById(R.id.notification_listview);
         notificationList.setAdapter(adapter);
-
-        notificationPopup.setContentView(layout);
-        notificationPopup.setOutsideTouchable(false);
     }
 
     public void fire (List<Booking> bookings) {
@@ -68,13 +73,14 @@ public class NotificationManager {
     }
 
     private void initData () {
-        for (Booking booking:firedBookingList) {
+         for (Booking booking:firedBookingList) {
             adapter.getNotificationScheduleList().add(booking);
         }
         adapter.notifyDataSetChanged();
     }
 
     private void populateNotification (List<Booking> bookings) {
+        firedBookingList.clear();
         for (Booking schedule:bookings) {
             if (isNotificationFired(schedule)) {
                 firedBookingList.add(schedule);
@@ -180,7 +186,7 @@ public class NotificationManager {
     }
 
     public void show () {
-        notificationPopup.showAsDropDown(notificationMenu);
+        notificationPopup.showAsDropDown(notificationMenu,0,25);
     }
 
     public NotificationAdapter getAdapter () {
